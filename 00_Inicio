@@ -1,0 +1,8 @@
+# Crear el proyecto
+composer create-project laravel/laravel devstagram
+
+# Crear la base de datos en MySQL
+# Modificar el archivo .env con los datos de la DB
+# Descomentar la extensión mbstring en el archivo phpinit en caso de error
+# Reiniciar el servicio 
+# Ejecutar nuevamente el comando php artisan serve
