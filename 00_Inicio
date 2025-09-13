@@ -6,3 +6,4 @@ composer create-project laravel/laravel devstagram
 # Descomentar la extensión mbstring en el archivo phpinit en caso de error
 # Reiniciar el servicio 
 # Ejecutar nuevamente el comando php artisan serve
+# Revertir cambios
