@@ -8,6 +8,29 @@ composer global require laravel/installer
 
 # https://php.new/
 
+# Cambiar la versión de PHP
+
+set "PATH=C:\php-8.5.10;%PATH%"
+
+# Comprobar la versión
+
+php -v
+
+PHP 8.5.10 (cli)
+
+where php
+
+C:\php-8.5.10\php.exe
+C:\php\php.exe
+
+# Comprobamos las extensiones
+
+php -m | findstr /i "openssl curl mbstring pgsql fileinfo"
+
+php artisan about
+
+
+
 # Crear el proyecto
 laravel new nombre_proyecto
 
