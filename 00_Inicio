@@ -1,3 +1,11 @@
+# Instalar Composer
+
+# Verificar la versión
+composer --version
+
+# Instalar/actualizar Laravel
+composer global require laravel/installer
+
 # Crear el proyecto
 composer create-project laravel/laravel devstagram
 
