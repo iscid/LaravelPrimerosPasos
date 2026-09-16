@@ -6,14 +6,16 @@ composer --version
 # Instalar/actualizar Laravel
 composer global require laravel/installer
 
-# Crear el proyecto
-composer create-project laravel/laravel devstagram
+# https://php.new/
 
-# Crear la base de datos en MySQL
-# Modificar el archivo .env con los datos de la DB
-# Descomentar la extensión mbstring en el archivo phpinit en caso de error
-# Reiniciar el servicio 
-# Ejecutar nuevamente el comando php artisan serve
-# Crea las migraciones php artisan migrate
-# Revertir cambios
-php artisan migrate:rollback
+# Crear el proyecto
+laravel new nombre_proyecto
+
+# Solución al error Pail
+
+Abrir composer.json y cambiar el arreglo "dev" que está dentro de Scripts por:
+
+"dev": [
+        "Composer\\Config::disableProcessTimeout",
+        "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185\" \"php artisan serve\" \"php artisan queue:listen --tries=1 --timeout=0\" \"npm run dev\" --names=server,queue,vite --kill-others"
+]
