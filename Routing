@@ -1,0 +1,17 @@
+Routes/web.php
+
+Aquí es donde se crean las rutas en Laravel, también se pueden escribir en el archivo api.php
+
+# Closure
+
+Route::get('/user', function () {
+  return 'Hello User';
+});
+
+Route::get('/nosotros', function () {
+    return "Sobre nosotros";
+});
+
+# Controller
+
+Route::get('/user', [UserController::class, 'index']);
