@@ -1,0 +1,86 @@
+Es necesario agregar  @csrf en el formulario además de method y action para que pueda funcionar.
+
+views/auth/register.blade.php
+
+@section('auth-contents')
+    <form method="POST" action="{{ route('register.store') }}" class="mt-14 space-y-5" novalidate>
+        @csrf
+        <div class="space-y-2">
+            <label class="font-bold text-2xl block" for="name">Nombre</label>
+
+            <input id="name" type="text" placeholder="Tu Nombre"
+                class="w-full border border-gray-300 p-3 rounded-lg text-white font-bold" name="name" />
+        </div>
+
+        <div class="space-y-2">
+            <label class="font-bold text-2xl block" for="email">Email</label>
+
+            <input id="email" type="email" placeholder="Email de Registro"
+                class="w-full border border-gray-300 p-3 rounded-lg text-white font-bold" name="email" />
+        </div>
+
+        <div class="space-y-2">
+            <label class="font-bold text-2xl block">Password</label>
+
+            <input type="password" placeholder="Password de Registro"
+                class="w-full border border-gray-300 p-3 rounded-lg text-white font-bold" name="password" />
+        </div>
+
+        <div class="space-y-2">
+            <label class="font-bold text-2xl block" for="password_confirmation">Repetir Password</label>
+
+            <input type="password" placeholder="Password de Registro"
+                class="w-full border border-gray-300 p-3 rounded-lg text-white font-bold" name="password_confirmation" />
+        </div>
+
+        <input type="submit" value='Registrarme'
+            class="bg-purple-950 hover:bg-purple-800 w-full p-3 rounded-lg text-white font-bold  text-xl cursor-pointer" />
+    </form>
+@endsection
+
+# ==============================================================================================
+
+Controllers/auth/RegisterController.php
+
+<?php
+
+namespace App\Http\Controllers\auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class RegisterController extends Controller
+{
+    //
+    public function index()
+    {
+        return view('auth.register');
+    }
+
+    public function store(Request $request)
+    {
+        $name = $request->input('name');
+
+        return "Hola: $name";
+    }
+}
+
+# ================================================================================================
+
+routes/web.php
+
+<?php
+
+use App\Http\Controllers\auth\RegisterController;
+use App\Http\Controllers\auth\LoginController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('auth/register', [RegisterController::class, 'index'])->name('register');
+Route::post('auth/register', [RegisterController::class, 'store'])->name('register.store');
+
+Route::get('auth/login', [LoginController::class, 'index'])->name('login');
+
