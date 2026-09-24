@@ -1,0 +1,13 @@
+-- Al crear un request con php artisan make:request NombreRequest, el método authorize por defecto devuelve false:
+
+public function authorize(): bool
+{
+  return false;
+}
+
+Es necesario cambiarlo a true para corregir este error.
+
+public function authorize(): bool
+{
+  return true;
+}
