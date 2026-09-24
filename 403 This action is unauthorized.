@@ -11,3 +11,5 @@ public function authorize(): bool
 {
   return true;
 }
+
+También es posible eliminar ese método.
