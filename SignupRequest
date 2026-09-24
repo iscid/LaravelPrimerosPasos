@@ -19,7 +19,7 @@ class SignupRequest extends FormRequest
     public function authorize(): bool
     {
         // return false;
-        return true;
+        return true; // Debe estar en true, por default se crea como false
     }
 
     #[Override]
