@@ -1,0 +1,61 @@
+Tabla pivote
+
+-- Se crea la migración:
+
+php artisan make:migration create_paquete_componentes_table
+
+public function up(): void
+{
+    Schema::create('paquete_componentes', function (Blueprint $table) {
+        $table->id();
+
+        $table->foreignId('paquete_id')
+            ->constrained('paquetes')
+            ->cascadeOnDelete();
+
+        $table->foreignId('componente_id')
+            ->constrained('componentes')
+            ->restrictOnDelete();
+
+        $table->unsignedInteger('cantidad')->default(1);
+
+        $table->string('tipo', 20)->default('incluido');
+
+        $table->text('descripcion')->nullable();
+
+        $table->timestamps();
+
+        $table->unique(['paquete_id', 'componente_id']);
+    });
+}
+
+public function down(): void
+{
+    Schema::dropIfExists('paquete_componentes');
+}
+
+-- En App/Models/Paquete.php
+
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+Y dentro de la clase:
+
+public function componentes(): BelongsToMany
+{
+    return $this->belongsToMany(
+        Componente::class,
+        'paquete_componentes'
+    )->withPivot([
+        'cantidad',
+        'tipo',
+        'descripcion',
+    ])->withTimestamps();
+}
+
+-- Ejecutar las migraciones
+
+php artisan migrate
+
+-- Comporobar que se crearon
+
+php artisan migrate:status
