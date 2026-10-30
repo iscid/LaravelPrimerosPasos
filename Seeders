@@ -1,0 +1,61 @@
+-- Se crea con el siguiente comando:
+
+php artisan db:seed --class=PaqueteSeeder
+
+-- Se modifica el seeder
+
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Paquete;
+use App\Models\Servicio;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+
+class PaqueteSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $servicios = Servicio::all();
+
+        foreach ($servicios as $servicio) {
+            $basico = Paquete::updateOrCreate(
+                [
+                    'servicio_id' => $servicio->id,
+                    'slug' => 'basico',
+                ],
+                [
+                    'paquete_padre_id' => null,
+                    'nombre' => 'Básico',
+                    'descripcion' => 'Paquete básico del ' . $servicio->nombre,
+                    'precio' => 0,
+                    'duracion' => 4,
+                    'orden' => 1,
+                    'es_recomendado' => false,
+                    'activo' => true,
+                ]
+            );
+
+            Paquete::updateOrCreate(
+                [
+                    'servicio_id' => $servicio->id,
+                    'slug' => 'plus',
+                ],
+                [
+                    'paquete_padre_id' => $basico->id,
+                    'nombre' => 'Plus',
+                    'descripcion' => 'Paquete mejorado del ' . $servicio->nombre,
+                    'precio' => 0,
+                    'duracion' => 4,
+                    'orden' => 2,
+                    'es_recomendado' => true,
+                    'activo' => true,
+                ]
+            );
+        }
+    }
+}
+
+-- Se comprueba con:
+
