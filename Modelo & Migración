@@ -1,0 +1,55 @@
+-- Se crean con un sólo comando:
+
+php artisan make:model Componente -m
+
+-- MIGRACIÓN
+
+public function up(): void
+{
+    Schema::create('componentes', function (Blueprint $table) {
+        $table->id();
+        $table->string('nombre', 150)->unique();
+        $table->text('descripcion')->nullable();
+        $table->string('imagen')->nullable();
+        $table->boolean('activo')->default(true);
+        $table->timestamps();
+    });
+}
+
+-- MODELO
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Componente extends Model
+{
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'imagen',
+        'activo',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'activo' => 'boolean',
+        ];
+    }
+
+    public function paquetes(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Paquete::class,
+            'paquete_componentes'
+        )->withPivot([
+            'cantidad',
+            'tipo',
+            'descripcion',
+        ])->withTimestamps();
+    }
+}
